@@ -9,6 +9,7 @@ import ReportsList from "./Pages/ReportsList";
 import User from "./Pages/User";
 import UpdateReport from "./Pages/UpdateReport";
 import AddReport from "./Pages/AddReport";
+import Login from "./Pages/Login";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/reports/update/:reportId" element={<UpdateReport />} />
           <Route path="/reports/add" element={<AddReport />} />
         </Route>
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
