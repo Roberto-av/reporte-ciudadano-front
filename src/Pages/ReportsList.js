@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from '../Services/axiosInstance';
 import CustomTable from "../Components/CustomTable";
 import { Pagination } from "react-bootstrap";
+import { useAuth } from '../Services/AuthContext';
 
 function ReportsList() {
+  const { token } = useAuth(); // Obtén el token del contexto de autenticación
+
   const [reports, setReports] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [reportsPerPage] = useState(10);
@@ -11,9 +14,11 @@ function ReportsList() {
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/report`
-        );
+        const response = await axiosInstance.get("/report", {
+          headers: {
+            Authorization: `Bearer ${token}` // Incluye el token en la solicitud
+          }
+        }); // Usa axiosInstance para realizar la solicitud HTTP
         setReports(response.data);
       } catch (error) {
         console.error("Error fetching reports:", error);
@@ -21,7 +26,7 @@ function ReportsList() {
     };
 
     fetchReports();
-  }, []);
+  }, [token]);
 
   const indexOfLastReport = currentPage * reportsPerPage;
   const indexOfFirstReport = indexOfLastReport - reportsPerPage;
@@ -42,7 +47,7 @@ function ReportsList() {
   const handleUpdateStatusClick = async (reportId) => {
     try {
       // Obtener el reporte actual
-      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/report/${reportId}`);
+      const response = await axiosInstance.get(`/report/${reportId}`);
       const report = response.data;
 
       // Actualizar el estado según la lógica deseada
@@ -57,9 +62,8 @@ function ReportsList() {
       }
 
       if (window.confirm("¿Estás seguro de que quieres actualizar el estado?")) {
-        await axios.put(`${process.env.REACT_APP_API_BASE_URL}/report/update/${reportId}`, { status: newStatus });
+        await axiosInstance.put(`/report/update/${reportId}`, { status: newStatus });
       }
-      
       
       // Actualizar la lista de reportes después de la actualización
       const updatedReports = reports.map(r => {
