@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../Services/AuthContext'; // Importa el contexto de autenticación
 import '../Assets/style.css';
 
 function CustomNavbar() {
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext); // Obtiene el estado de autenticación del contexto
+
+  // Función para cerrar sesión
+  const handleLogout = () => {
+    // Eliminar el token del localStorage u otras acciones necesarias para cerrar sesión
+    localStorage.removeItem('token');
+    setIsLoggedIn(false); // Actualizar el estado para indicar que el usuario ha cerrado sesión
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light navbar-custom">
       <div className="container">
@@ -20,12 +30,23 @@ function CustomNavbar() {
             </li>
           </ul>
           <ul className="navbar-nav right-elements">
-            <li className="nav-item">
-              <Link className="nav-link" to="/login">Iniciar sesión</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/register">Registrarse</Link>
-            </li>
+            {/* Mostrar botón de cerrar sesión solo si el usuario está logeado */}
+            {isLoggedIn && (
+              <li className="nav-item">
+                <button className="nav-link" onClick={handleLogout}>Cerrar sesión</button>
+              </li>
+            )}
+            {/* Mostrar enlaces de inicio de sesión y registro solo si el usuario no está logeado */}
+            {!isLoggedIn && (
+              <>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/login">Iniciar sesión</Link>
+                </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/register">Registrarse</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
