@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom'; // Importa Navigate
-import styles from '../Assets/login.module.css'; // Importa los estilos de CSS Modules
+import { useAuth } from '../Services/AuthContext'; 
+import { Navigate } from 'react-router-dom'; 
+import styles from '../Assets/login.module.css'; 
+import AxiosInstance from "../Services/axiosInstance";
 
 function Login() {
+    const { updateToken, updateUser  } = useAuth(); // Obtiene la función updateToken del contexto de autenticación
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,19 +19,32 @@ function Login() {
                 username,
                 password,
             });
-            // Manejar la respuesta (por ejemplo, guardar el token de acceso)
-            const { token, message, user_id } = response.data;
+            const { token, message, user_id } = response.data; // Obtener el id del usuario
+
+            if (message === "Invalid username or password") {
+                // Si el mensaje indica que el usuario no fue encontrado
+                console.log('Usuario no encontrado:', message);
+                setError("Usuario o Contraseña incorrectos, porfavor intentelo de nuevo.");
+                return;
+            }
             localStorage.setItem('token', token);
+            console.log('El error del server', message);
             console.log("Message:", message);
-            // Establecer isLoggedIn en true para redirigir al usuario
-            setIsLoggedIn(true);
+            updateToken(token);
+    
+            // Obtener los roles del usuario desde el endpoint correspondiente
+            const rolesResponse = await AxiosInstance.get(`/auth/userRoles/${user_id}`);
+            const roles = rolesResponse.data;
+            updateUser({ id: user_id, roles: roles });
         } catch (error) {
-            setError('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
+            // Manejo de errores de red u otros errores
+            console.error('Error durante el inicio de sesión:', error.message);
+            setError('Ocurrió un error durante el inicio de sesión. Por favor, inténtalo de nuevo.');
         }
     };
 
-    // Redirigir al usuario si está logueado
-    if (isLoggedIn) {
+ 
+    if (localStorage.getItem('token')) {
         return <Navigate to="/" />;
     }
 
@@ -46,7 +62,7 @@ function Login() {
                         <label htmlFor="password">Contraseña</label>
                         <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
-                    <button type="submit">Iniciar Sesión</button>
+                    <button className='loginButton' type="submit">Iniciar Sesión</button>
                 </form>
                 <p>¿No tienes cuenta? <a href="/registro">Regístrate aquí</a></p>
             </div>
