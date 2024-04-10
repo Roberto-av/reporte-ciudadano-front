@@ -2,6 +2,8 @@ import React, { useContext} from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Services/AuthContext";
 import "../Assets/style.css";
+import { ReactComponent as HomeIcon } from '../Assets/img/home.svg';
+import { ReactComponent as DocsIcon } from '../Assets/img/docs.svg';
 
 function CustomNavbar() {
   const { isLoggedIn, user, logout } = useContext(AuthContext);
@@ -16,8 +18,9 @@ function CustomNavbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light navbar-custom">
       <div className="container">
+      <HomeIcon width="24px" height="24px" style={{ marginRight: '5px' }} />
         <Link className="navbar-brand" to="/">
-          Inicio
+          INICIO
         </Link>
         <button
           className="navbar-toggler"
@@ -42,7 +45,8 @@ function CustomNavbar() {
             {isLoggedIn && (
               <li className="nav-item">
                 <Link className="nav-link" to="/reports">
-                  Reportes
+                <DocsIcon style={{ marginRight: '5px' }} />
+                  REPORTES
                 </Link>
               </li>
             )}
@@ -52,7 +56,7 @@ function CustomNavbar() {
             {isLoggedIn && (
               <li className="nav-item">
                 <button className="nav-link" onClick={handleLogout}>
-                  Cerrar sesión
+                  CERRAR SESION
                 </button>
               </li>
             )}
@@ -61,12 +65,12 @@ function CustomNavbar() {
               <>
                 <li className="nav-item">
                   <Link className="nav-link" to="/login">
-                    Iniciar sesión
+                    INICIAR SESION
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link" to="/register">
-                    Registrarse
+                    REGISTRARSE
                   </Link>
                 </li>
               </>
