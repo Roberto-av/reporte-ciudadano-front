@@ -1,35 +1,51 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Crea el contexto de React
 const AuthContext = createContext();
 
-// Hook personalizado para acceder al contexto de autenticación
 export const useAuth = () => useContext(AuthContext);
 
-// Proveedor del contexto de autenticación
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token') || null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // **Nueva propiedad**
+  const [user, setUser] = useState(null); // Agregamos el estado del usuario
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true' || false);
 
-  // Función para actualizar el token
   const updateToken = (newToken) => {
     setToken(newToken);
-    localStorage.setItem('token', newToken);
-    setIsLoggedIn(true); // **Actualiza el estado de isLoggedIn**
+    if (newToken) {
+        setIsLoggedIn(true);
+        localStorage.setItem('token', newToken);
+    } else {
+        setIsLoggedIn(false);
+        localStorage.removeItem('token');
+    }
+};
+
+  const updateUser = ({ id, roles }) => {
+    setUser({
+      id: id,
+      roles: roles
+    });
   };
 
-  // Función para eliminar el token (cerrar sesión)
   const logout = () => {
     setToken(null);
     localStorage.removeItem('token');
-    setIsLoggedIn(false); // **Actualiza el estado de isLoggedIn**
+    setUser(null); // Limpiamos el usuario al cerrar sesión
+    setIsLoggedIn(false);
+    localStorage.removeItem('isLoggedIn'); // Removemos el estado de autenticación del almacenamiento local
+    console.log('Logout successful');
   };
 
+  useEffect(() => {
+    // Almacenar el estado de autenticación en el almacenamiento local
+    localStorage.setItem('isLoggedIn', isLoggedIn);
+  }, [isLoggedIn]);
+
   return (
-    <AuthContext.Provider value={{ token, updateToken, logout, isLoggedIn }}>
+    <AuthContext.Provider value={{ token, user, updateToken, updateUser, logout, isLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export { AuthContext, AuthProvider }; // Solo exporta AuthContext y AuthProvider
+export { AuthContext, AuthProvider };
