@@ -8,6 +8,7 @@ import ReportsList from './Pages/ReportsList';
 import UpdateReport from './Pages/UpdateReport';
 import AddReport from './Pages/AddReport';
 import Login from './Pages/Login';
+import Register from './Pages/Register';
 import { AuthProvider } from './Services/AuthContext';
 import ProtectedRoute from './Components/ProtectedRoute'; // Importa el componente ProtectedRoute
 
@@ -18,12 +19,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            {/* Utiliza ProtectedRoute para proteger las rutas */}
             <Route element={<ProtectedRoute/>}>
               <Route path="/reports" element={<ReportsList />} />
               <Route path="/reports/update/:reportId" element={<UpdateReport />} />
               <Route path="/reports/add" element={<AddReport />} />
             </Route>
+            <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
           </Route>
         </Routes>
