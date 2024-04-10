@@ -1,25 +1,29 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./Assets/style.css";
-import Layout from "./Pages/Layout";
-import Home from "./Pages/Home";
-import ReportsList from "./Pages/ReportsList";
-import UpdateReport from "./Pages/UpdateReport";
-import AddReport from "./Pages/AddReport";
-import Login from "./Pages/Login";
-import { AuthProvider } from "./Services/AuthContext"; // Importa el proveedor de contexto de autenticación
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Assets/style.css';
+import Layout from './Pages/Layout';
+import Home from './Pages/Home';
+import ReportsList from './Pages/ReportsList';
+import UpdateReport from './Pages/UpdateReport';
+import AddReport from './Pages/AddReport';
+import Login from './Pages/Login';
+import { AuthProvider } from './Services/AuthContext';
+import ProtectedRoute from './Components/ProtectedRoute'; // Importa el componente ProtectedRoute
 
 function App() {
   return (
-    <AuthProvider> {/* Envuelve la aplicación con el proveedor de contexto de autenticación */}
+    <AuthProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="/reports" element={<ReportsList />} />
-            <Route path="/reports/update/:reportId" element={<UpdateReport />} />
-            <Route path="/reports/add" element={<AddReport />} />
+            {/* Utiliza ProtectedRoute para proteger las rutas */}
+            <Route element={<ProtectedRoute/>}>
+              <Route path="/reports" element={<ReportsList />} />
+              <Route path="/reports/update/:reportId" element={<UpdateReport />} />
+              <Route path="/reports/add" element={<AddReport />} />
+            </Route>
             <Route path="/login" element={<Login />} />
           </Route>
         </Routes>
