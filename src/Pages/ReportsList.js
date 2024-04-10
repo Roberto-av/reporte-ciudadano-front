@@ -55,15 +55,38 @@ function ReportsList() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const columns = [
-    { header: "USER_ID", field: "userId" },
     { header: "ID", field: "id" },
     { header: "Tipo de incidencia", field: "tiposIncidencia" },
     { header: "Descripción", field: "description" },
     { header: "Dirección", field: "address" },
     { header: "Comentarios", field: "comments" },
-    { header: "Estado", field: "status" },
+    { 
+      header: "Estado", 
+      field: "status", 
+      style: (status) => {
+        switch (status) {
+          case 'PENDIENTE':
+            return { color: 'red' };
+          case 'PROCESO':
+            return { color: '#e5be01' };
+          case 'RESUELTO':
+            return { color: 'green' };
+          default:
+            return { color: 'inherit' }; // Color por defecto
+        }
+      } 
+    },
     { header: "Fecha de creación", field: "createdAt" },
   ];
+
+  let updatedColumns = [...columns]; // Copiamos las columnas existentes
+if (user.roles.includes("ROLE_ADMIN") || user.roles.includes("ROLE_EMPLOYEE")) {
+  updatedColumns = [
+    { header: "USER_ID", field: "userId" }, // Agregamos la nueva columna al principio
+    ...columns // Agregamos las columnas existentes después de la nueva columna
+  ];
+}
+
 
   const handleUpdateStatusClick = async (reportId) => {
     try {
@@ -112,6 +135,11 @@ function ReportsList() {
   return (
     <div className="table-container">
       <h1>Reportes</h1>
+      <div style={{ textAlign: 'right' }}>
+  <button style={{ width: 'auto' }}>
+    Hacer Reporte
+  </button>
+  </div>
       <CustomTable data={currentReports} columns={columns} actions={actions} />
       <div className="pagination-container">
         <Pagination>
