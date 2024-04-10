@@ -5,7 +5,7 @@ import { Pagination } from "react-bootstrap";
 import { useAuth } from '../Services/AuthContext';
 
 function ReportsList() {
-  const { token } = useAuth(); // Obtén el token del contexto de autenticación
+  const { token, user } = useAuth(); // Obtén el token del contexto de autenticación
 
   const [reports, setReports] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,19 +14,39 @@ function ReportsList() {
   useEffect(() => {
     const fetchReports = async () => {
       try {
-        const response = await axiosInstance.get("/report", {
-          headers: {
-            Authorization: `Bearer ${token}` // Incluye el token en la solicitud
-          }
-        }); // Usa axiosInstance para realizar la solicitud HTTP
-        setReports(response.data);
+        let response;
+        // Verificar si el usuario tiene el rol de "ROLE_ADMIN" o "ROLE_EMPLOYEE"
+        if (user.roles.includes("ROLE_ADMIN") || user.roles.includes("ROLE_EMPLOYEE")) {
+          // Si el usuario tiene uno de estos roles, obtener todos los reportes
+          response = await axiosInstance.get(`/api/report/all`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+        } else {
+          // Si el usuario no tiene esos roles, obtener los reportes asociados al ID del usuario
+          response = await axiosInstance.get(`/api/report/findAll/user/${user.id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+        }
+
+        const reportsWithUserId = response.data.map(report => ({
+          ...report,
+          userId: report.user.id
+        }));
+
+        // Actualizar el estado con los reportes obtenidos
+        setReports(reportsWithUserId);
+        console.log('Repostres obtenidos', reportsWithUserId);
       } catch (error) {
         console.error("Error fetching reports:", error);
       }
     };
 
     fetchReports();
-  }, [token]);
+  }, [token, user]);
 
   const indexOfLastReport = currentPage * reportsPerPage;
   const indexOfFirstReport = indexOfLastReport - reportsPerPage;
@@ -35,6 +55,7 @@ function ReportsList() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const columns = [
+    { header: "USER_ID", field: "userId" },
     { header: "ID", field: "id" },
     { header: "Tipo de incidencia", field: "tiposIncidencia" },
     { header: "Descripción", field: "description" },
