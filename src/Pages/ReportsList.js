@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axiosInstance from '../Services/axiosInstance';
+import axiosInstance from "../Services/axiosInstance";
 import CustomTable from "../Components/CustomTable";
 import { Pagination } from "react-bootstrap";
-import { useAuth } from '../Services/AuthContext';
+import { useAuth } from "../Services/AuthContext";
 
 function ReportsList() {
   const { token, user } = useAuth(); // Obtén el token del contexto de autenticación
@@ -16,30 +16,36 @@ function ReportsList() {
       try {
         let response;
         // Verificar si el usuario tiene el rol de "ROLE_ADMIN" o "ROLE_EMPLOYEE"
-        if (user.roles.includes("ROLE_ADMIN") || user.roles.includes("ROLE_EMPLOYEE")) {
+        if (
+          user.roles.includes("ROLE_ADMIN") ||
+          user.roles.includes("ROLE_EMPLOYEE")
+        ) {
           // Si el usuario tiene uno de estos roles, obtener todos los reportes
           response = await axiosInstance.get(`/api/report/all`, {
             headers: {
-              Authorization: `Bearer ${token}`
-            }
+              Authorization: `Bearer ${token}`,
+            },
           });
         } else {
           // Si el usuario no tiene esos roles, obtener los reportes asociados al ID del usuario
-          response = await axiosInstance.get(`/api/report/findAll/user/${user.id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`
+          response = await axiosInstance.get(
+            `/api/report/findAll/user/${user.id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             }
-          });
+          );
         }
 
-        const reportsWithUserId = response.data.map(report => ({
+        const reportsWithUserId = response.data.map((report) => ({
           ...report,
-          userId: report.user.id
+          userId: report.user.id,
         }));
 
         // Actualizar el estado con los reportes obtenidos
         setReports(reportsWithUserId);
-        console.log('Repostres obtenidos', reportsWithUserId);
+        console.log("Repostres obtenidos", reportsWithUserId);
       } catch (error) {
         console.error("Error fetching reports:", error);
       }
@@ -60,33 +66,24 @@ function ReportsList() {
     { header: "Descripción", field: "description" },
     { header: "Dirección", field: "address" },
     { header: "Comentarios", field: "comments" },
-    { 
-      header: "Estado", 
-      field: "status", 
+    {
+      header: "Estado",
+      field: "status",
       style: (status) => {
         switch (status) {
-          case 'PENDIENTE':
-            return { color: 'red' };
-          case 'PROCESO':
-            return { color: '#e5be01' };
-          case 'RESUELTO':
-            return { color: 'green' };
+          case "PENDIENTE":
+            return { color: "red" };
+          case "PROCESO":
+            return { color: "#e5be01" };
+          case "RESUELTO":
+            return { color: "green" };
           default:
-            return { color: 'inherit' }; // Color por defecto
+            return { color: "inherit" }; // Color por defecto
         }
-      } 
+      },
     },
     { header: "Fecha de creación", field: "createdAt" },
   ];
-
-  let updatedColumns = [...columns]; // Copiamos las columnas existentes
-if (user.roles.includes("ROLE_ADMIN") || user.roles.includes("ROLE_EMPLOYEE")) {
-  updatedColumns = [
-    { header: "USER_ID", field: "userId" }, // Agregamos la nueva columna al principio
-    ...columns // Agregamos las columnas existentes después de la nueva columna
-  ];
-}
-
 
   const handleUpdateStatusClick = async (reportId) => {
     try {
@@ -96,21 +93,25 @@ if (user.roles.includes("ROLE_ADMIN") || user.roles.includes("ROLE_EMPLOYEE")) {
 
       // Actualizar el estado según la lógica deseada
       let newStatus;
-      if (report.status === 'PENDIENTE') {
-        newStatus = 'PROCESO';
-      } else if (report.status === 'PROCESO') {
-        newStatus = 'RESUELTO';
+      if (report.status === "PENDIENTE") {
+        newStatus = "PROCESO";
+      } else if (report.status === "PROCESO") {
+        newStatus = "RESUELTO";
       } else {
-        console.warn('El reporte ya está en estado RESUELTO.');
+        console.warn("El reporte ya está en estado RESUELTO.");
         return; // No se puede actualizar más
       }
 
-      if (window.confirm("¿Estás seguro de que quieres actualizar el estado?")) {
-        await axiosInstance.put(`/report/update/${reportId}`, { status: newStatus });
+      if (
+        window.confirm("¿Estás seguro de que quieres actualizar el estado?")
+      ) {
+        await axiosInstance.put(`/report/update/${reportId}`, {
+          status: newStatus,
+        });
       }
-      
+
       // Actualizar la lista de reportes después de la actualización
-      const updatedReports = reports.map(r => {
+      const updatedReports = reports.map((r) => {
         if (r.id === reportId) {
           return { ...r, status: newStatus };
         }
@@ -118,9 +119,9 @@ if (user.roles.includes("ROLE_ADMIN") || user.roles.includes("ROLE_EMPLOYEE")) {
       });
       setReports(updatedReports);
 
-      console.log('Estado del reporte actualizado con éxito.');
+      console.log("Estado del reporte actualizado con éxito.");
     } catch (error) {
-      console.error('Error actualizando el estado del reporte:', error);
+      console.error("Error actualizando el estado del reporte:", error);
     }
   };
 
@@ -135,11 +136,9 @@ if (user.roles.includes("ROLE_ADMIN") || user.roles.includes("ROLE_EMPLOYEE")) {
   return (
     <div className="table-container">
       <h1>Reportes</h1>
-      <div style={{ textAlign: 'right' }}>
-  <button style={{ width: 'auto' }}>
-    Hacer Reporte
-  </button>
-  </div>
+      <div style={{ textAlign: "right" }}>
+        <button style={{ width: "auto" }}>Hacer Reporte</button>
+      </div>
       <CustomTable data={currentReports} columns={columns} actions={actions} />
       <div className="pagination-container">
         <Pagination>
