@@ -1,0 +1,50 @@
+.container {
+  margin: auto;
+  width: 700px;
+  padding: 30px;
+  background-color: #15353e;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formContainer {
+  width: 60%;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.formGroup input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.formGroup input[type="email"] {
+  width: 79%;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #01b81d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #068f1e;
+}
