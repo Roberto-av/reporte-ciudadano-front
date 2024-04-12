@@ -1,50 +1,56 @@
-.container {
-  margin: auto;
+.containerRegister {
+  margin: 0 auto;
   width: 700px;
-  padding: 30px;
-  background-color: #15353e;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .formContainer {
-  width: 60%;
+  background-color: #15353e;
+  padding: 20px;
+  border-radius: 8px;
+  height: 640px;
+}
+
+.formContainer h2{
+  padding-bottom: 20px;
+  padding-top: 20px;
 }
 
 .formGroup {
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 600px;
+  margin: auto;
+  margin-top: 25px;
 }
 
-.formGroup label {
-  display: block;
-  margin-bottom: 5px;
+.inlineFields {
+  flex: 1;
+  margin-right: 20px;
 }
 
 .formGroup input {
-  padding: 8px;
+  width: 100%;
+  padding: 14px; 
   border-radius: 8px;
   border: 1px solid #ccc;
 }
 
-.formGroup input[type="email"] {
-  width: 79%;
-}
-
-.submitButton {
-  width: 100%;
-  padding: 10px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+.formGroup button {
+  display: block;
+  margin: auto;
+  color: #FFF;
+  width: 40%;    
+  margin-top: 40px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  padding: 15px;
   background-color: #01b81d;
-  color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
 }
 
-.submitButton:hover {
+
+.formGroup button:hover {
   background-color: #068f1e;
 }

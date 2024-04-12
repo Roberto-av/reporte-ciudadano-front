@@ -40,68 +40,76 @@ function Register() {
     return <Navigate to="/login" />;
   }
   return (
-    <div className={styles.container}>
+    <div className={styles.containerRegister}>
       <div className={styles.formContainer}>
         <h2>REGISTRO</h2>
-        {error && <p>{error}</p>}
+        {error && <p class="text-danger">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
-            <label>Nombre:</label>
+            <div className={styles.inlineFields}>
             <input
               type="text"
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
+              placeholder="Nombre"
             />
-          </div>
-          <div className={styles.formGroup}>
-            <label>Apellido:</label>
+            </div>
+            <div className={styles.inlineFields}>
             <input
               type="text"
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
+              placeholder="Apellidos"
             />
+            </div>
           </div>
           <div className={styles.formGroup}>
-            <label>Correo electrónico:</label>
+          <div className={styles.inlineFields}>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
+              placeholder="Email"
             />
-          </div>
-          <div className={styles.formGroup}>
-            <label>Número de teléfono:</label>
+            </div>
+            <div className={styles.inlineFields}>
             <input
               type="text"
               name="phoneNumber"
               value={formData.phoneNumber}
               onChange={handleChange}
+              placeholder="Numero de telefono"
             />
+            </div>
           </div>
           <div className={styles.formGroup}>
-            <label>Nombre de usuario:</label>
+          <div className={styles.inlineFields}>
             <input
               type="text"
               name="username"
               value={formData.username}
               onChange={handleChange}
+              placeholder="Nombre de usuario"
             />
-          </div>
-          <div className={styles.formGroup}>
-            <label>Contraseña:</label>
+            </div>
+            <div className={styles.inlineFields}>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
+              placeholder="Contraseña"
             />
+            </div>
           </div>
-          <button className={styles.submitButton} type="submit">
-            REGISTRARSE
-          </button>
+          <div className={styles.formGroup}>
+            <button type="submit">
+              REGISTRARSE
+            </button>
+          </div>
         </form>
         <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesion</a></p>
       </div>
