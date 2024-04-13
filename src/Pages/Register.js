@@ -67,9 +67,7 @@ function Register() {
       setSuccess(true);
     } catch (error) {
       console.error("Registration failed:", error);
-      setError({
-        server: "Error en el registro. Por favor, inténtalo de nuevo.",
-      });
+      setError("Error en el registro. Por favor, inténtalo de nuevo.");
     }
   };
 
