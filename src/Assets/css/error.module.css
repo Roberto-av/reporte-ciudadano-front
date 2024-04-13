@@ -1,0 +1,34 @@
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  10%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  80% {
+    transform: translateX(5px);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translateX(-5px);
+  }
+  40%,
+  60% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.error {
+  color: white;
+  background-color: #ff4d4f;
+  border: 1px solid #c51c0a;
+  border-radius: 8px;
+  width: 100%;
+  animation: shake 0.5s ease-in-out;
+}
