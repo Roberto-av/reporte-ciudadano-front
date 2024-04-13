@@ -1,12 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Services/AuthContext";
 import "../Assets/css/style.css";
 import { ReactComponent as HomeIcon } from "../Assets/img/home.svg";
 import { ReactComponent as DocsIcon } from "../Assets/img/docs.svg";
+import { ReactComponent as UserIcon } from "../Assets/img/user.svg";
+import { ReactComponent as LogoutIcon } from "../Assets/img/logout.svg";
 
 function CustomNavbar() {
   const { isLoggedIn, user, logout } = useContext(AuthContext);
+
+  const [showNav, setShowNav] = useState(false);
+
+  const toggleNav = () => {
+    setShowNav(!showNav);
+  };
 
   const handleLogout = () => {
     logout();
@@ -17,27 +25,33 @@ function CustomNavbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light navbar-custom">
       <div className="container">
-        <HomeIcon width="24px" height="24px" style={{ marginRight: "5px" }} />
         <Link className="navbar-brand" to="/">
+          <HomeIcon
+            width="24px"
+            height="24px"
+            style={{ marginRight: "5px", marginBottom: "7px" }}
+          />
           INICIO
         </Link>
         <button
-          className="navbar-toggler"
+          className="navbar-toggler custom-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
+          onClick={toggleNav}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div
+          className={`collapse navbar-collapse${showNav ? " show" : ""}`}
+          id="navbarNav"
+        >
           <ul className="navbar-nav me-auto">
             {user && user.roles && user.roles.includes("ROLE_ADMIN") && (
               <li className="nav-item">
                 <Link className="nav-link" to="/users">
-                  Usuarios
+                  <UserIcon
+                    style={{ marginRight: "5px", marginBottom: "7px" }}
+                  />
+                  USUARIOS
                 </Link>
               </li>
             )}
@@ -55,6 +69,9 @@ function CustomNavbar() {
               <li className="nav-item">
                 <button className="nav-link" onClick={handleLogout}>
                   CERRAR SESION
+                  <LogoutIcon
+                    style={{ marginLeft: "10px", marginBottom: "4px" }}
+                  />
                 </button>
               </li>
             )}

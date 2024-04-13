@@ -26,6 +26,10 @@ label{
   color: white;
 }
 
+.custom-toggler {
+    width: 48px; /* Ajusta el ancho según tus preferencias */
+  }
+
 .table-container {
     width: 90%;
     position: relative;
