@@ -1,0 +1,24 @@
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
+.success {
+  border: 2px solid #389e0d;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  width: 100%;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+.success p{
+  color: #82bd69;
+}
