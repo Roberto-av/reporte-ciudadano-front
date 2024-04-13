@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../Services/AuthContext";
 import { Navigate } from "react-router-dom";
 import styles from "../Assets/css/login.module.css";
 import AxiosInstance from "../Services/axiosInstance";
+import ErrorMessage from "../Components/ErrorMessage";
 
 function Login() {
   const { updateToken, updateUser } = useAuth();
@@ -11,6 +12,14 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    // Función para limpiar el mensaje de error después de 10 segundos
+    const timer = setTimeout(() => {
+      setError("");
+    }, 7000);
+    return () => clearTimeout(timer);
+  }, [error]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,7 +67,7 @@ function Login() {
     <div className={styles.container}>
       <div className={styles.loginContainer}>
         <h2>Iniciar Sesión</h2>
-        {error && <p className={styles.error}>{error}</p>}
+        {error && <ErrorMessage message={error} />}
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
             <label htmlFor="username">Usuario</label>
