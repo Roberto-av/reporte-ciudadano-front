@@ -1,0 +1,36 @@
+.containerHome {
+  margin: 0 auto;
+  color: white;
+  width: 100%;
+}
+
+.containerFrame {
+  margin: 0;
+  padding: 0;
+  width: 80%;
+  height: 800px;
+  padding: 30px;
+}
+
+.containerFrame h1{
+ padding-bottom: 20px;
+}
+
+.containerTxt p,
+h2 {
+  text-align: start;
+}
+
+.customButtom button {
+  width: 50%;
+}
+
+.containerTxt {
+  background-color: rgba(255, 255, 255, 0.2);
+  max-width: 400px;
+
+  padding: 20px;
+  text-align: center;
+  backdrop-filter: blur(1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
