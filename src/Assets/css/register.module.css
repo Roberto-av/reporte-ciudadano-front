@@ -10,9 +10,10 @@
   height: 640px;
 }
 
-.formContainer h2{
+.formContainer h2 {
   padding-bottom: 20px;
   padding-top: 20px;
+  text-align: center;
 }
 
 .formGroup {
@@ -30,7 +31,7 @@
 
 .formGroup input {
   width: 100%;
-  padding: 14px; 
+  padding: 14px;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
@@ -38,8 +39,8 @@
 .formGroup button {
   display: block;
   margin: auto;
-  color: #FFF;
-  width: 40%;    
+  color: #fff;
+  width: 40%;
   margin-top: 40px;
   margin-bottom: 10px;
   font-size: 16px;
@@ -50,7 +51,16 @@
   cursor: pointer;
 }
 
-
 .formGroup button:hover {
   background-color: #068f1e;
+}
+
+.success h2{
+  color: #01b81d;
+  width: 100%;
+}
+
+.successIcon{
+  margin: auto;
+  display: block;
 }
