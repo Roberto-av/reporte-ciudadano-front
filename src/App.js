@@ -9,9 +9,12 @@ import UpdateReport from './Pages/UpdateReport';
 import AddReport from './Pages/AddReport';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
-import User from './Pages/User';
+import HomeDash from './Pages/dashboard/HomeDash';
+import LayoutDash from './Pages/dashboard/LayoutDash';
+import Users from './Pages/dashboard/Users';
 import { AuthProvider } from './Services/AuthContext';
-import ProtectedRoute from './Components/ProtectedRoute'; // Importa el componente ProtectedRoute
+import ProtectedRoute from './Components/ProtectedRoute';
+import NotFound from "./Pages/NotFound";
 
 function App() {
   return (
@@ -24,10 +27,14 @@ function App() {
               <Route path="/reports" element={<ReportsList />} />
               <Route path="/reports/update/:reportId" element={<UpdateReport />} />
               <Route path="/reports/add" element={<AddReport />} />
-              <Route path="/users" element={<User />} />
+              <Route path="/admin/dashboard" element={<LayoutDash />}>
+                <Route index element={<HomeDash />} />
+                <Route path="users" element={<Users />} />
+              </Route>
             </Route>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </Router>
