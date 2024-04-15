@@ -4,7 +4,7 @@ import { AuthContext } from "../Services/AuthContext";
 import "../Assets/css/style.css";
 import { ReactComponent as HomeIcon } from "../Assets/img/home.svg";
 import { ReactComponent as DocsIcon } from "../Assets/img/docs.svg";
-import { ReactComponent as UserIcon } from "../Assets/img/user.svg";
+import { ReactComponent as DashIcon } from "../Assets/img/dash.svg";
 import { ReactComponent as LogoutIcon } from "../Assets/img/logout.svg";
 
 function CustomNavbar() {
@@ -47,11 +47,9 @@ function CustomNavbar() {
           <ul className="navbar-nav me-auto">
             {user && user.roles && user.roles.includes("ROLE_ADMIN") && (
               <li className="nav-item">
-                <Link className="nav-link" to="/users">
-                  <UserIcon
-                    style={{ marginRight: "5px", marginBottom: "7px" }}
-                  />
-                  USUARIOS
+                <Link className="nav-link" to="/admin/dashboard">
+                <DashIcon style={{ marginRight: "7px"}} />
+                  DASHBOARD
                 </Link>
               </li>
             )}
