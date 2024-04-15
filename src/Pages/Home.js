@@ -5,7 +5,7 @@ import { AuthContext } from "../Services/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const backgroundImageStyle = {
@@ -17,7 +17,11 @@ function Home() {
 
   const handleReportClick = () => {
     if (isLoggedIn) {
-      navigate("/reports/add");
+      if(user.roles.includes("ROLE_ADMIN") || user.roles.includes("ROLE_EMPLOYEE")){
+        navigate("/reports");
+      }else{
+        navigate("/reports/add");
+      }
     } else {
       console.log("El usuario no está logueado");
       navigate("/login");
