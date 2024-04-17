@@ -6,7 +6,7 @@ export const useAuth = () => useContext(AuthContext);
 
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token') || null);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null); // Agregamos el estado del usuario
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true' || false);
 
   const updateToken = (newToken) => {
@@ -22,21 +22,20 @@ const AuthProvider = ({ children }) => {
 
   const updateUser = ({ id, roles }) => {
     setUser({ id, roles });
-    localStorage.setItem('user', JSON.stringify({ id, roles })); // Almacenamos los roles del usuario
+    localStorage.setItem('user', JSON.stringify({ id, roles }));
   };
 
   const logout = () => {
     setToken(null);
     localStorage.removeItem('token');
-    setUser(null); // Limpiamos el usuario al cerrar sesión
-    localStorage.removeItem('user'); // Limpiamos los roles del usuario al cerrar sesión
+    setUser(null); 
+    localStorage.removeItem('user'); 
     setIsLoggedIn(false);
-    localStorage.removeItem('isLoggedIn'); // Removemos el estado de autenticación del almacenamiento local
+    localStorage.removeItem('isLoggedIn');
     console.log('Logout successful');
   };
 
   useEffect(() => {
-    // Almacenar el estado de autenticación en el almacenamiento local
     localStorage.setItem('isLoggedIn', isLoggedIn);
   }, [isLoggedIn]);
 
