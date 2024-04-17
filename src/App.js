@@ -9,6 +9,7 @@ import UpdateReport from './Pages/UpdateReport';
 import AddReport from './Pages/AddReport';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
+import ReportListByUserId from './Pages/ReportListByUserId';
 import HomeDash from './Pages/dashboard/HomeDash';
 import LayoutDash from './Pages/dashboard/LayoutDash';
 import Users from './Pages/dashboard/Users';
@@ -26,6 +27,7 @@ function App() {
             <Route element={<ProtectedRoute/>}>
               <Route path="/reports" element={<ReportsList />} />
               <Route path="/reports/update/:reportId" element={<UpdateReport />} />
+              <Route path="/reports/:userId" element={<ReportListByUserId />} />
               <Route path="/reports/add" element={<AddReport />} />
               <Route path="/admin/dashboard" element={<LayoutDash />}>
                 <Route index element={<HomeDash />} />
