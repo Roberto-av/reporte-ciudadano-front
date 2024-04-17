@@ -4,6 +4,7 @@ a {
 }
 
 aside {
+  position: fixed;
   height: 100vh;
   width: 30vh;
   margin-left: 10px;
@@ -61,4 +62,229 @@ aside .asidebar a:hover::before {
 
 aside .asidebar a:hover span {
   margin-left: 0.6rem;
+}
+
+main .newUser {
+  margin-top: 1.3rem;
+  width: 70%;
+  margin-left: 20%;
+}
+
+main .newUser .userList {
+  background-color: #1c4a57;
+  padding: 10px;
+  border-radius: 16px;
+  margin-top: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between; /* Cambiar a space-between */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.4rem;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+main .newUser .userList button {
+  width: auto;
+  height: auto;
+  background-color: #1c4a57;
+  border-color: red;
+  stroke: red;
+  border-radius: 16px;
+  font-size: 14px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+main .newUser .userList button:hover {
+  background-color: #1e5d6c;
+}
+
+main .newUser .userList:hover {
+  box-shadow: none;
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.user {
+  width: 10%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 12px;
+  border-radius: 16px;
+}
+
+.user:hover {
+  background-color: #1e5d6c;
+  cursor: pointer;
+}
+
+.user p {
+  margin-top: 5px;
+  font-size: 0.8vw;
+  color: #989898;
+}
+
+.user h2 {
+  font-size: 1.3vw;
+  margin-bottom: 5px;
+}
+
+.cotainertableUsers {
+  width: 100%;
+  color: white;
+  background-color: #1e5d6c;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.tableUsers {
+  width: 100%;
+  transition: width 1.5s ease, max-width 1.5s ease;
+}
+
+.tableUsers thead {
+  border-radius: 15px;
+  
+}
+
+.tableUsers th {
+  background-color: #1b7283;
+  padding: 15px;
+}
+
+.tableUsers td {
+  padding: 15px;
+}
+
+.tableUsers tr:nth-child(odd) td {
+  background-color: #1c4a57; /* Color de fondo para las filas impares */
+}
+
+.tableUsers td:last-child {
+  border-bottom-right-radius: 10px;
+}
+
+.tableUsers td:first-child{
+  border-bottom-left-radius: 10px;
+}
+
+.tableUsers th:first-child{
+  border-top-left-radius: 5px;
+}
+
+.tableUsers th:last-child{
+  border-top-right-radius: 5px;
+}
+
+.buttonDelete{
+  background-color: #ff3232;
+  width: auto;
+  border-radius: 8px;
+}
+
+.buttonDelete:hover{
+  background-color: #de0d0d;
+}
+
+
+
+
+@media screen and (max-width: 1500px) {
+  .containerA {
+    width: 95%;
+    grid-template-columns: 7rem auto 23rem;
+  }
+
+  aside .asidebar h3 {
+    display: none;
+  }
+
+  aside .asidebar h1 {
+    font-size: 1.5vw;
+    padding-left: 20%;
+    text-align: start;
+  }
+
+  aside .asidebar a:last-child {
+    position: relative;
+    margin-top: 1.8rem;
+  }
+
+  aside {
+    width: 15%;
+  }
+
+  aside .asidebar {
+    width: 50%;
+    height: 40%;
+    transition: width 0.3s ease, height 0.3s ease;
+  }
+
+  .newUser .userList > :nth-last-child(-n + 3):not(:last-child) {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .newUser .userList > :nth-last-child(-n + 5):not(:last-child) {
+    display: none;
+  }
+
+  .user h2 {
+    font-size: 1.2rem;
+  }
+
+  .user p {
+    font-size: 0.8rem;
+  }
+
+  .user {
+    width: 20%;
+  }
+
+  aside {
+    width: 15%;
+  }
+
+  aside .asidebar {
+    width: 75%;
+    height: 40%;
+    transition: width 0.3s ease, height 0.3s ease;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .newUser .userList > :nth-last-child(-n + 6):not(:last-child) {
+    display: none;
+  }
+
+  aside {
+    display: none;
+  }
+
+  main .newUser {
+    margin: auto;
+  }
+
+  .user p {
+    font-size: 0.6rem;
+  }
+
+  .user h2 {
+    font-size: 1rem;
+  }
 }
