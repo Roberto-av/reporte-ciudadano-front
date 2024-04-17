@@ -4,8 +4,10 @@ import NewUserCard from "../../Components/NewUserCard";
 import { ReactComponent as PlusIcon } from "../../Assets/img/plus.svg";
 import axiosInstance from "../../Services/axiosInstance";
 import { useAuth } from "../../Services/AuthContext";
-import { Stomp } from "@stomp/stompjs";
+//import { Stomp } from "@stomp/stompjs";
 import TableUsers from "../../Components/TableUsers";
+import moment from 'moment';
+
 
 function Users() {
   const { token } = useAuth();
@@ -23,7 +25,6 @@ function Users() {
       setSelectedUser(null);
       setShowTable(false);
     } else {
-      // Si no hay un usuario seleccionado o el usuario clicado es diferente al seleccionado, mostrar la tabla
       setSelectedUser(user);
       setShowTable(true);
     }
@@ -34,13 +35,11 @@ function Users() {
       // Si la tabla está visible y no hay usuario seleccionado, ocultar la tabla
       setShowTable(false);
     } else {
-      // Si la tabla no está visible o hay un usuario seleccionado, mostrar la tabla con todos los usuarios
       setSelectedUser(null);
       setShowAllUsers(true);
       setShowTable(true);
       setUsers(allUsers);
     }
-    console.log("Estoy en more", setUsers(allUsers));
   };
 
   useEffect(() => {
@@ -66,6 +65,10 @@ function Users() {
           created_at: user.created_at,
         }));
 
+        const filteredUsers = usersData.filter(user => {
+          return user.username !== 'admin' && !user.username.startsWith('empleado');
+        });
+    
         setAllUsers(usersData);
 
         // Separar usuarios con y sin created_at
@@ -181,13 +184,15 @@ function Users() {
       <h2>Usuarios nuevos</h2>
       <div className={styles.userList}>
         {cardUsers.map((user) => (
-          <NewUserCard
-            key={user.id}
-            name={user.username}
-            info="Now"
-            customIcon={null}
-            onClick={() => handleUserClick(user)}
-          />
+          (user.username !== 'admin' && !user.username.startsWith('empleado')) && (
+            <NewUserCard
+              key={user.id}
+              name={user.username}
+              info={`${moment(user.created_at).fromNow(true)}`}
+              customIcon={null}
+              onClick={() => handleUserClick(user)}
+            />
+          )
         ))}
         <NewUserCard
           key="more"
