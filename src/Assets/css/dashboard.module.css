@@ -200,7 +200,7 @@ main .newUser .userList:hover {
   background-color: #de0d0d;
 }
 
-@media screen and (max-width: 1500px) {
+@media screen and (max-width: 1650px) {
   .containerA {
     width: 95%;
     grid-template-columns: 7rem auto 23rem;
