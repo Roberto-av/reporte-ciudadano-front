@@ -16,9 +16,9 @@ function AddReport() {
     const timer = setTimeout(() => {
       setError("");
       setSuccess("");
-    }, 7000);
+    }, 6000);
     return () => clearTimeout(timer);
-  }, [error]);
+  }, [error, success  ]);
 
   const [formData, setFormData] = useState({
     tiposIncidencia: "",
