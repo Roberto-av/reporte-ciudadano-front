@@ -149,16 +149,16 @@ main .newUser .userList:hover {
   border-bottom-right-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  overflow-x: auto;
 }
 
 .tableUsers {
   width: 100%;
-  transition: width 1.5s ease, max-width 1.5s ease;
+  transition: all 0.3s ease;
 }
 
 .tableUsers thead {
   border-radius: 15px;
-  
 }
 
 .tableUsers th {
@@ -178,30 +178,27 @@ main .newUser .userList:hover {
   border-bottom-right-radius: 10px;
 }
 
-.tableUsers td:first-child{
+.tableUsers td:first-child {
   border-bottom-left-radius: 10px;
 }
 
-.tableUsers th:first-child{
+.tableUsers th:first-child {
   border-top-left-radius: 5px;
 }
 
-.tableUsers th:last-child{
+.tableUsers th:last-child {
   border-top-right-radius: 5px;
 }
 
-.buttonDelete{
+.buttonDelete {
   background-color: #ff3232;
   width: auto;
   border-radius: 8px;
 }
 
-.buttonDelete:hover{
+.buttonDelete:hover {
   background-color: #de0d0d;
 }
-
-
-
 
 @media screen and (max-width: 1500px) {
   .containerA {
@@ -267,7 +264,7 @@ main .newUser .userList:hover {
   }
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 650px) {
   .newUser .userList > :nth-last-child(-n + 6):not(:last-child) {
     display: none;
   }
